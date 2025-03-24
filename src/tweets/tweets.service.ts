@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Tweet } from './tweet.schema';
+import { PaginationDto } from './dto/Pagination.dto';
 
 @Injectable()
 export class TweetsService {
@@ -16,16 +17,32 @@ export class TweetsService {
     return nuevoTweet.save();
   }
 
-  async getTweetsPaginated(page: number = 1, limit: number = 25, text: String, dayOfWeek: String, month: number, year: number) {
+  async getTweetsPaginated(paginationDto: PaginationDto) {
     try {
+      const {
+        page = 1,
+        limit = 25,
+        tweet,
+        day_of_week,
+        month,
+        year,
+      } = paginationDto;
       const skip = (page - 1) * limit;
-      const filter: any = {}
+      const filter: {
+        tweet?: {
+          $regex: string;
+          $options: string;
+        };
+        day_of_week?: string;
+        month?: number;
+        year?: number;
+      } = {};
 
-      if (text) {
-        filter.text = { $regex: text, $options: 'i' };
+      if (tweet) {
+        filter.tweet = { $regex: tweet, $options: 'i' };
       }
-      if (dayOfWeek) {
-        filter.dayOfWeek = dayOfWeek;
+      if (day_of_week) {
+        filter.day_of_week = day_of_week;
       }
       if (month) {
         filter.month = month;
@@ -34,14 +51,16 @@ export class TweetsService {
         filter.year = year;
       }
 
+      console.log(filter);
+
       const [results, count] = await Promise.all([
         this.tweetModel.find(filter).skip(skip).limit(limit).exec(),
         this.tweetModel.countDocuments(filter).exec(),
       ]);
 
-      return { page, page_size: limit, count, results }
-      } catch (error) {
-      throw new BadRequestException('Failed to fetch cats');
+      return { page, page_size: limit, count, results };
+    } catch (error) {
+      throw new BadRequestException(error);
     }
   }
 }

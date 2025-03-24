@@ -3,7 +3,6 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class Tweet extends Document {
-
   @Prop({ required: true })
   user: string;
 
