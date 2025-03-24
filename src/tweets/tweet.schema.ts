@@ -1,12 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type TweetDocument = Tweet & Document;
-
 @Schema()
-export class Tweet {
-  @Prop({ required: true })
-  _id: string;
+export class Tweet extends Document {
 
   @Prop({ required: true })
   user: string;
@@ -32,7 +28,7 @@ export class Tweet {
   @Prop({ required: true })
   sentiment: number;
 
-  @Prop({ required: true, type: [String] })
+  @Prop({ type: [String] })
   tokens: string[];
 }
 

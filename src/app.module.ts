@@ -7,7 +7,7 @@ import { TweetsModule } from './tweets/tweets.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb+srv://UsuarioPrueba:UsuarioPruebaPassword@twitterdatacluster.pr01q.mongodb.net/?retryWrites=true&w=majority&appName=TwitterDataCluster'),
+    MongooseModule.forRoot('mongodb+srv://UsuarioPrueba:UsuarioPruebaPassword@twitterdatacluster.pr01q.mongodb.net/db_twitter?retryWrites=true&w=majority&appName=TwitterDataCluster'),
     UsuariosModule,
     TweetsModule,
   ],
