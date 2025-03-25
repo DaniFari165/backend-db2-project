@@ -26,6 +26,7 @@ export class TweetsService {
         day_of_week,
         month,
         year,
+        sentiment,
       } = paginationDto;
       const skip = (page - 1) * limit;
       const filter: {
@@ -36,6 +37,7 @@ export class TweetsService {
         day_of_week?: string;
         month?: number;
         year?: number;
+        sentiment?: number;
       } = {};
 
       if (tweet) {
@@ -49,6 +51,9 @@ export class TweetsService {
       }
       if (year) {
         filter.year = year;
+      }
+      if (sentiment) {
+        filter.sentiment = sentiment;
       }
 
       console.log(filter);

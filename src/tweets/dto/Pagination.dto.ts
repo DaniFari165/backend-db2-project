@@ -35,4 +35,10 @@ export class PaginationDto {
   @Min(1)
   @Type(() => Number)
   year?: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Type(() => Number)
+  sentiment?: number;
 }
