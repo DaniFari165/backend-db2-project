@@ -38,7 +38,7 @@ export class PaginationDto {
 
   @IsOptional()
   @IsInt()
-  @Min(1)
+  @Min(0)
   @Type(() => Number)
   sentiment?: number;
 }
