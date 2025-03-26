@@ -52,7 +52,7 @@ export class TweetsService {
       if (year) {
         filter.year = year;
       }
-      if (sentiment) {
+      if (sentiment !== undefined) {
         filter.sentiment = sentiment;
       }
 
